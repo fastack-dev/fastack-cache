@@ -1,6 +1,6 @@
 # fastack-cache
 
-fastack-cache is a caching plugin for fastack ❤️
+fastack-cache is a caching plugin for [fastack](https://github.com/fastack-dev/fastack) ❤️
 
 This plugin is inspired by the [django cache framework](https://docs.djangoproject.com/en/4.0/topics/cache/) and [django-redis](https://github.com/jazzband/django-redis)!
 
