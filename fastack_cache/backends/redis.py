@@ -1,7 +1,6 @@
 from datetime import timedelta
 from typing import Any, Optional, Union
 
-from redis.client import _Key
 from redis.lock import Lock
 
 from fastack_cache.backends.base import BaseCache
@@ -108,7 +107,7 @@ class RedisCache(BaseCache):
         return self.client.pipeline(**kwds)
 
     @auto_connect
-    def lock(self, name: _Key, **kwds) -> Lock:
+    def lock(self, name: str, **kwds) -> Lock:
         return self.client.lock(name, **kwds)
 
     def __enter__(self) -> "RedisCache":
