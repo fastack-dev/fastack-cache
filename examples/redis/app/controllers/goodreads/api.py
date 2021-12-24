@@ -31,14 +31,19 @@ def parse_quote(quote: Tag) -> Quote:
     for text in quote_text_tag.text.strip().splitlines():
         quote_text += text.strip()
 
-    if "―" in quote_text:
-        quote_text = quote_text.split("―")[0].strip()
+    text = ""
+    for part in quote_text.split("."):
+        text += part.strip() + ". "
+
+    text = text.replace("“", "").replace("”", "")
+    if "―" in text:
+        text = text.split("―")[0].strip()
 
     quote_footer = quote.select_one("div.quoteFooter")
     quote_tags = quote_footer.select("div:nth-child(1) > a")
     tags = [tag.text.strip() for tag in quote_tags]
     quote_likes = quote_footer.select_one("div:nth-child(2) > a").text.strip()
-    return {"author": author, "text": quote_text, "likes": quote_likes, "tags": tags}
+    return {"author": author, "text": text, "likes": quote_likes, "tags": tags}
 
 
 async def get_quotes(tag: str) -> List[Quote]:
