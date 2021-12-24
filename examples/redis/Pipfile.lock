@@ -103,11 +103,11 @@
         },
         "fastack-cache": {
             "hashes": [
-                "sha256:43fa45c81154b182d9f18bd815300e5445a7554a907d675e55c105243b45d56c",
-                "sha256:f4dee060c2c931281b35708496509736b952d27a698bc29d815437d73175c645"
+                "sha256:2d7cca757e4c8d639dddcee8b4be0985e1bc019c4e8ef405467cb507780a5b4e",
+                "sha256:a173dc60eda6f988bce9bb0898971989011a93d9b98226c178917a17767c3f06"
             ],
             "index": "pypi",
-            "version": "==0.2.0"
+            "version": "==0.2.1"
         },
         "fastapi": {
             "hashes": [
