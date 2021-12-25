@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastack = "*"
+bs4 = "*"
+httpx = "*"
+aioredis = "*"
+fastack-cache = {path = "./../../dist/fastack_cache-0.2.1-py3-none-any.whl"}
+
+[dev-packages]
+pre-commit = "*"
+
+[requires]
+python_version = "3"
