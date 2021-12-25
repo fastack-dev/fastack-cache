@@ -11,7 +11,7 @@ try:
 
 except ImportError:
     errMsg = "Redis is not installed. Please install it with `pip install redis`"
-    exit(errMsg)
+    raise RuntimeError(errMsg)
 
 
 class RedisBackend(BaseCacheBackend):

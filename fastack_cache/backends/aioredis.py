@@ -11,7 +11,7 @@ try:
 
 except ImportError:
     errMsg = "aioredis is not installed. Please install it with `pip install aioredis`"
-    exit(errMsg)
+    raise RuntimeError(errMsg)
 
 
 class AioRedisBackend(BaseCacheBackend):
