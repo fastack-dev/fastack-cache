@@ -34,7 +34,7 @@ CACHES = {
     # cache name
     "default": {
         # cache backend
-        "BACKEND": "fastack_cache.backends.redis.RedisCache",
+        "BACKEND": "fastack_cache.backends.redis.RedisBackend",
         # Cache options to be passed to the Redis(...) class
         "OPTIONS": {
             "host": REDIS_HOST,
