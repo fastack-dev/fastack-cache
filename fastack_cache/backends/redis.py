@@ -1,21 +1,20 @@
 from datetime import timedelta
 from typing import Any, Optional, Union
 
-from redis.lock import Lock
-
-from fastack_cache.backends.base import BaseCache
+from fastack_cache.backends.base import BaseCacheBackend
 from fastack_cache.decorators import auto_connect
 from fastack_cache.serializers.base import BaseSerializer
 
 try:
-    from redis import Redis
-    from redis.client import Pipeline
+    from redis.client import Pipeline, Redis
+    from redis.lock import Lock
+
 except ImportError:
     errMsg = "Redis is not installed. Please install it with `pip install redis`"
     exit(errMsg)
 
 
-class RedisCache(BaseCache):
+class RedisBackend(BaseCacheBackend):
     """
     Redis cache backend.
     """
@@ -28,7 +27,7 @@ class RedisCache(BaseCache):
         super().__init__(serializer, **kwargs)
         self.client: Optional[Redis] = None
 
-    def connect(self, **kwargs) -> "RedisCache":
+    def connect(self, **kwargs) -> "RedisBackend":
         """
         Create a connection to the Redis server.
         """
@@ -38,7 +37,7 @@ class RedisCache(BaseCache):
 
         kwargs.update(self.kwargs)
         self.client = Redis(**kwargs)
-        return self.client
+        return self
 
     def disconnect(self) -> None:
         """
@@ -110,7 +109,7 @@ class RedisCache(BaseCache):
     def lock(self, name: str, **kwds) -> Lock:
         return self.client.lock(name, **kwds)
 
-    def __enter__(self) -> "RedisCache":
+    def __enter__(self) -> "RedisBackend":
         """
         Context manager enter.
         """

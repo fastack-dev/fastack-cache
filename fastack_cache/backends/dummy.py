@@ -1,11 +1,11 @@
-from fastack_cache.backends.base import BaseCache
+from fastack_cache.backends.base import BaseCacheBackend
 
 
-class DummyCache(BaseCache):
+class DummyBackend(BaseCacheBackend):
     def __init__(self, serializer, **options):
         super().__init__(serializer, **options)
 
-    def connect(self) -> "DummyCache":
+    def connect(self) -> "DummyBackend":
         """
         Connect to the server.
         """
