@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastack-cache"
-version = "0.2.1"
+version = "1.0.0"
 description = "Caching plugin for fastack"
 authors = ["aprilahijriyan <37798612+aprilahijriyan@users.noreply.github.com>"]
 license = "MIT"
@@ -41,6 +41,10 @@ pre-commit = "^2.16.0"
 [tool.poetry.extras]
 redis = ["redis"]
 aioredis = ["aioredis"]
+
+[tool.poetry.urls]
+
+"Bug Tracker" = "https://github.com/fastack-dev/fastack-cache/issues"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
