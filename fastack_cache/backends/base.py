@@ -7,7 +7,7 @@ from fastack_cache.serializers.base import BaseSerializer
 DictStrAny = Dict[str, Any]
 
 
-class BaseCache(metaclass=ABCMeta):
+class BaseCacheBackend(metaclass=ABCMeta):
     """
     Base class for all cache backends.
     """
@@ -17,7 +17,7 @@ class BaseCache(metaclass=ABCMeta):
         self.kwargs: DictStrAny = kwargs
 
     @abstractmethod
-    def connect(self) -> "BaseCache":
+    def connect(self) -> "BaseCacheBackend":
         """
         Connect to the server.
         """

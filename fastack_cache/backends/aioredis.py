@@ -6,17 +6,17 @@ from fastack_cache.decorators import auto_connect
 from fastack_cache.serializers.base import BaseSerializer
 
 try:
-    from redis.client import Pipeline, Redis
-    from redis.lock import Lock
+    from aioredis.client import Pipeline, Redis
+    from aioredis.lock import Lock
 
 except ImportError:
-    errMsg = "Redis is not installed. Please install it with `pip install redis`"
+    errMsg = "aioredis is not installed. Please install it with `pip install aioredis`"
     exit(errMsg)
 
 
-class RedisBackend(BaseCacheBackend):
+class AioRedisBackend(BaseCacheBackend):
     """
-    Redis cache backend.
+    aioredis cache backend.
     """
 
     def __init__(self, serializer: BaseSerializer, **kwargs):
@@ -27,7 +27,7 @@ class RedisBackend(BaseCacheBackend):
         super().__init__(serializer, **kwargs)
         self.client: Optional[Redis] = None
 
-    def connect(self, **kwargs) -> "RedisBackend":
+    async def connect(self, **kwargs) -> "AioRedisBackend":
         """
         Create a connection to the Redis server.
         """
@@ -37,30 +37,31 @@ class RedisBackend(BaseCacheBackend):
 
         kwargs.update(self.kwargs)
         self.client = Redis(**kwargs)
+        await self.client.initialize()
         return self
 
-    def disconnect(self) -> None:
+    async def disconnect(self) -> None:
         """
         Disconnect from the Redis server.
         """
 
         if self.client:
-            self.client.close()
+            await self.client.close()
             self.client = None
 
     @auto_connect
-    def get(self, key: str) -> Any:
+    async def get(self, key: str) -> Any:
         """
         Get a value from the cache.
         """
 
-        value = self.client.get(key)
+        value = await self.client.get(key)
         if value:
             return self.serializer.loads(value)
         return value
 
     @auto_connect
-    def set(
+    async def set(
         self, key: str, value: Any, timeout: Optional[Union[int, timedelta]] = None
     ) -> None:
         """
@@ -69,37 +70,37 @@ class RedisBackend(BaseCacheBackend):
 
         value = self.serializer.dumps(value)
         if timeout:
-            self.client.setex(key, timeout, value)
+            await self.client.setex(key, timeout, value)
         else:
-            self.client.set(key, value)
+            await self.client.set(key, value)
 
     @auto_connect
-    def delete(self, key: str) -> None:
+    async def delete(self, key: str) -> None:
         """
         Delete a value from the cache.
         """
-        self.client.delete(key)
+        await self.client.delete(key)
 
     @auto_connect
-    def clear(self) -> None:
+    async def clear(self) -> None:
         """
         Clear the entire cache.
         """
-        self.client.flushdb()
+        await self.client.flushdb()
 
     @auto_connect
-    def incr(self, name: str, amount: int = 1) -> int:
+    async def incr(self, name: str, amount: int = 1) -> int:
         """
         Increment the value of an integer cached key.
         """
-        return self.client.incr(name, amount)
+        return await self.client.incr(name, amount)
 
     @auto_connect
-    def decr(self, name: str, amount: int = 1) -> int:
+    async def decr(self, name: str, amount: int = 1) -> int:
         """
         Decrement the value of an integer cached key.
         """
-        return self.client.decr(name, amount)
+        return await self.client.decr(name, amount)
 
     @auto_connect
     def pipeline(self, **kwds) -> Pipeline:
@@ -109,17 +110,17 @@ class RedisBackend(BaseCacheBackend):
     def lock(self, name: str, **kwds) -> Lock:
         return self.client.lock(name, **kwds)
 
-    def __enter__(self) -> "RedisBackend":
+    async def __aenter__(self) -> "AioRedisBackend":
         """
         Context manager enter.
         """
 
-        self.connect()
+        await self.connect()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
         Context manager exit.
         """
 
-        self.disconnect()
+        await self.disconnect()
