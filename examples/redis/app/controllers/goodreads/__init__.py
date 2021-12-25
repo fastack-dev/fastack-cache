@@ -3,7 +3,7 @@ from fastack import ListController
 from fastapi import Request, Response
 from pydantic import conint
 
-from fastack_cache.backends.redis import RedisCache
+from fastack_cache.backends.redis import RedisBackend
 
 
 class GoodreadsController(ListController):
@@ -14,7 +14,7 @@ class GoodreadsController(ListController):
         page: conint(gt=0) = 1,
         page_size: conint(gt=0) = 10,
     ) -> Response:
-        cache: RedisCache = request.state.cache
+        cache: RedisBackend = request.state.cache
         with cache:
             quotes = cache.get(q)
             if not quotes:

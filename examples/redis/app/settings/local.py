@@ -9,7 +9,7 @@ REDIS_PORT = 6900
 REDIS_DB = 0
 CACHES = {
     "default": {
-        "BACKEND": "fastack_cache.backends.redis.RedisCache",
+        "BACKEND": "fastack_cache.backends.redis.RedisBackend",
         "OPTIONS": {
             "host": REDIS_HOST,
             "port": REDIS_PORT,
