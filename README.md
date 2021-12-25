@@ -4,8 +4,11 @@ fastack-cache is a caching plugin for [fastack](https://github.com/fastack-dev/f
 
 This plugin is inspired by the [django cache framework](https://docs.djangoproject.com/en/4.0/topics/cache/) and [django-redis](https://github.com/jazzband/django-redis)!
 
-Currently only supports ``redis`` as cache backend.
-And the plan in the future there will be ``aioredis`` and ``memcached`` as cache backends!
+Supported cache backend:
+
+* Redis:
+    * ``fastack_cache.backends.redis.RedisBackend`` - Sync version
+    * ``fastack_cache.backends.aioredis.AioRedisBackend`` - Async version
 
 # Installation
 
