@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d48b98ee7d0d1ff135ceb009ae7ff9019984b8c5795cd6170c953cc9f8471005"
+            "sha256": "285536db13473287bc4e6b482bdbefe917fdde950600c76c84d60689e17bafb7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -111,12 +111,11 @@
         },
         "fastack-cache": {
             "hashes": [
-                "sha256:2d7cca757e4c8d639dddcee8b4be0985e1bc019c4e8ef405467cb507780a5b4e",
-                "sha256:a173dc60eda6f988bce9bb0898971989011a93d9b98226c178917a17767c3f06",
-                "sha256:ff0f4b8046b1bc531cd8574fa9a5feca44084d9d3fc091c6957aabb3eeb10924"
+                "sha256:3a7447a9b85e458eb11d9578da0dddf6b933775dfda84f3ec3f867304b184262",
+                "sha256:daffffbef594f1f69561a6ecaadc3bcd8ac32aee6cbb4cd795fa1914c445c3af"
             ],
-            "path": "./../../dist/fastack_cache-0.2.1-py3-none-any.whl",
-            "version": "==0.2.1"
+            "index": "pypi",
+            "version": "==1.0.0"
         },
         "fastapi": {
             "hashes": [
@@ -360,7 +359,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "toml": {
@@ -368,7 +367,7 @@
                 "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b",
                 "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"
             ],
-            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==0.10.2"
         },
         "virtualenv": {

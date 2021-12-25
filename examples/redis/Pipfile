@@ -8,7 +8,7 @@ fastack = "*"
 bs4 = "*"
 httpx = "*"
 redis = "*"
-fastack-cache = "*"
+fastack-cache = ">=1.0.0"
 
 [dev-packages]
 pre-commit = "*"
