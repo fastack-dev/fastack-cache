@@ -5,8 +5,8 @@ from fastack import Fastack
 from fastack.utils import import_attr
 from starlette.datastructures import State
 
-from fastack_cache.backends.base import BaseCache
-from fastack_cache.backends.dummy import DummyCache
+from fastack_cache.backends.base import BaseCacheBackend
+from fastack_cache.backends.dummy import DummyBackend
 from fastack_cache.serializers.base import BaseSerializer
 
 
@@ -28,8 +28,8 @@ def setup(app: Fastack):
                 ) from e
 
             serializer = serializer_class(
-                **serializer_options.get("DUMPS", {}),
-                **serializer_options.get("LOADS", {}),
+                serializer_options.get("DUMPS", {}),
+                serializer_options.get("LOADS", {}),
             )
             backend = cache_config.get("BACKEND")
             if not backend:
@@ -49,12 +49,12 @@ def setup(app: Fastack):
         app.state.caches = State(caches)
         default_cache = caches.get("default")
         if not default_cache:
-            default_cache = DummyCache(None)
+            default_cache = DummyBackend(None)
 
         app.state.cache = default_cache
 
     async def on_shutdown():
-        caches: List[BaseCache] = app.state.caches._state.values()
+        caches: List[BaseCacheBackend] = app.state.caches._state.values()
         for cache in caches:
             method = cache.disconnect
             if iscoroutinefunction(method):
