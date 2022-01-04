@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastack-cache"
-version = "1.0.0"
+version = "1.0.1"
 description = "Caching plugin for fastack"
 authors = ["aprilahijriyan <37798612+aprilahijriyan@users.noreply.github.com>"]
 license = "MIT"
@@ -30,7 +30,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0.0"
-fastack = "^2.0.3"
+fastack = "^3.0.0"
 redis = {version = "^4.0.2", optional = true}
 aioredis = {version = "^2.0.0", optional = true}
 

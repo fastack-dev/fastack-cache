@@ -13,7 +13,7 @@ Supported cache backend:
 # Installation
 
 ```
-pip install fastack-cache
+pip install -U fastack-cache
 ```
 
 # Usage

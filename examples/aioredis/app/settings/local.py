@@ -1,8 +1,6 @@
 DEBUG = True
 PLUGINS = ["fastack_cache"]
-COMMANDS = [
-    # "app.commands.user.cli"
-]
+COMMANDS = []
 
 REDIS_HOST = "localhost"
 REDIS_PORT = 6900
