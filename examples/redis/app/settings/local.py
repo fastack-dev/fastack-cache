@@ -13,9 +13,9 @@ CACHES = {
             "port": REDIS_PORT,
             "db": REDIS_DB,
         },
-        "SERIALIZER": {
-            "CLASS": "fastack_cache.serializers.JSONSerializer",
-            "OPTIONS": {"DUMPS": {}, "LOADS": {}},
-        },
+        # "SERIALIZER": {
+        #     "CLASS": "fastack_cache.serializers.JSONSerializer",
+        #     "OPTIONS": {"DUMPS": {}, "LOADS": {}},
+        # },
     }
 }
