@@ -1,12 +1,15 @@
 from app.controllers.goodreads import api
-from fastack import ListController
+from fastack import ReadOnlyController
+from fastack.decorators import route
 from fastapi import Request, Response
 from pydantic import conint
 
 from fastack_cache.backends.redis import RedisBackend
+from fastack_cache.decorators import cached
+from fastack_cache.helpers import run_async
 
 
-class GoodreadsController(ListController):
+class GoodreadsController(ReadOnlyController):
     async def list(
         self,
         request: Request,
@@ -22,3 +25,9 @@ class GoodreadsController(ListController):
                 cache.set(q, quotes, 15)
 
             return self.get_paginated_response(quotes, page, page_size)
+
+    @route("/{tag}")
+    @cached()
+    def retrieve(self, request: Request, tag: str) -> Response:
+        quotes = run_async(api.get_quotes, tag)
+        return self.json(f"{tag} quote", quotes)
