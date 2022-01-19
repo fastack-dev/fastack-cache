@@ -1,10 +1,11 @@
 from typing import Coroutine
 
 import anyio
+from fastack.globals import request as _g_request
 from fastapi import Request
 
 from fastack_cache.backends.base import BaseCacheBackend
-from fastack.globals import request as _g_request
+
 
 def get_request_object(kwargs: dict) -> Request:
     request: Request = None

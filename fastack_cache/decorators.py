@@ -1,8 +1,10 @@
-from functools import wraps
 from asyncio import iscoroutinefunction
+from functools import wraps
 from types import MethodType
 from typing import Callable
+
 from fastapi import Request
+
 from fastack_cache.backends.base import BaseCacheBackend
 from fastack_cache.helpers import get_cache_backend, get_request_object, run_sync
 from fastack_cache.key import get_cache_key
@@ -31,7 +33,10 @@ def auto_connect(method: MethodType):
 
 
 def cached(
-    timeout: int = 15, *, key: Callable[[Request], str] = get_cache_key, cache: str = "default"
+    timeout: int = 15,
+    *,
+    key: Callable[[Request], str] = get_cache_key,
+    cache: str = "default"
 ) -> Callable:
     """
     Decorator to cache the result of a function.

@@ -1,7 +1,6 @@
 from app.controllers.goodreads import api
 from fastack import ReadOnlyController
 from fastack.decorators import route
-from fastack.globals import request
 from fastapi import Request, Response
 from pydantic import conint
 
