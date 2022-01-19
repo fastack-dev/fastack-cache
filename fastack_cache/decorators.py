@@ -1,10 +1,10 @@
 from functools import wraps
-from inspect import iscoroutinefunction
+from asyncio import iscoroutinefunction
 from types import MethodType
 from typing import Callable
-
+from fastapi import Request
 from fastack_cache.backends.base import BaseCacheBackend
-from fastack_cache.helpers import get_cache_backend, get_request_object, run_async
+from fastack_cache.helpers import get_cache_backend, get_request_object, run_sync
 from fastack_cache.key import get_cache_key
 
 
@@ -31,7 +31,7 @@ def auto_connect(method: MethodType):
 
 
 def cached(
-    timeout: int = 15, *, key: Callable = get_cache_key, cache: str = "default"
+    timeout: int = 15, *, key: Callable[[Request], str] = get_cache_key, cache: str = "default"
 ) -> Callable:
     """
     Decorator to cache the result of a function.
@@ -44,7 +44,7 @@ def cached(
 
             @wraps(func)
             async def wrapper(*args, **kwargs):
-                request = get_request_object(kwargs, func.__name__)
+                request = get_request_object(kwargs)
                 cache_backend = get_cache_backend(request, cache)
                 cache_key = key(request)
                 cache_get = cache_backend.get
@@ -67,12 +67,12 @@ def cached(
 
             @wraps(func)
             def wrapper(*args, **kwargs):
-                request = get_request_object(kwargs, func.__name__)
+                request = get_request_object(kwargs)
                 cache_backend = get_cache_backend(request, cache)
                 cache_key = key(request)
                 cache_get = cache_backend.get
                 if iscoroutinefunction(cache_get):
-                    value = run_async(cache_get, cache_key)
+                    value = run_sync(cache_get, cache_key)
                 else:
                     value = cache_get(cache_key)
 
@@ -80,7 +80,7 @@ def cached(
                     value = func(*args, **kwargs)
                     cache_set = cache_backend.set
                     if iscoroutinefunction(cache_set):
-                        run_async(cache_set, cache_key, value, timeout)
+                        run_sync(cache_set, cache_key, value, timeout)
                     else:
                         cache_set(cache_key, value, timeout)
 

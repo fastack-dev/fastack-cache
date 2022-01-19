@@ -1,12 +1,13 @@
 from app.controllers.goodreads import api
 from fastack import ReadOnlyController
 from fastack.decorators import route
+from fastack.globals import request
 from fastapi import Request, Response
 from pydantic import conint
 
 from fastack_cache.backends.redis import RedisBackend
 from fastack_cache.decorators import cached
-from fastack_cache.helpers import run_async
+from fastack_cache.helpers import run_sync
 
 
 class GoodreadsController(ReadOnlyController):
@@ -28,6 +29,6 @@ class GoodreadsController(ReadOnlyController):
 
     @route("/{tag}")
     @cached()
-    def retrieve(self, request: Request, tag: str) -> Response:
-        quotes = run_async(api.get_quotes, tag)
+    def retrieve(self, tag: str) -> Response:
+        quotes = run_sync(api.get_quotes, tag)
         return self.json(f"{tag} quote", quotes)
