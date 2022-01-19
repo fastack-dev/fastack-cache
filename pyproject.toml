@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastack-cache"
-version = "1.1.0"
+version = "1.2.0"
 description = "Caching plugin for fastack"
 authors = ["aprilahijriyan <37798612+aprilahijriyan@users.noreply.github.com>"]
 license = "MIT"
