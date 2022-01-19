@@ -1,19 +1,22 @@
 from typing import Coroutine
 
 import anyio
+from fastack.globals import request as _g_request
 from fastapi import Request
 
 from fastack_cache.backends.base import BaseCacheBackend
 
 
-def get_request_object(kwargs: dict, identifier: str) -> Request:
+def get_request_object(kwargs: dict) -> Request:
     request: Request = None
     for _, v in kwargs.items():
         if isinstance(v, Request):
             request = v
             break
 
-    assert request is not None, f"Request object not found in responder {identifier}"
+    if not request:
+        request = _g_request
+
     return request
 
 
@@ -22,7 +25,7 @@ def get_cache_backend(request: Request, cache: str = "default") -> BaseCacheBack
     return cache_backend
 
 
-def run_async(func: Coroutine, *args, **kwds):
+def run_sync(func: Coroutine, *args, **kwds):
     async def executor():
         return await func(*args, **kwds)
 
